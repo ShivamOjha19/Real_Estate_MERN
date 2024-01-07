@@ -6,7 +6,7 @@ import authRouter from './routes/auth.routes.js'
 
 dotenv.config();
 
-console.log("MongoDB Connection String:", process.env.MONGODB_URI);
+// console.log("MongoDB Connection String:", process.env.MONGODB_URI);
 
 
 
@@ -18,15 +18,24 @@ app.listen(3000, () => {
  console.log("Server is running on port 3000");
 
  mongoose
-.connect(process.env.MONGODB_URI)
+.connect(process.env.MONGODB_URI , {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  tls: true
+})
 .then( () => {
- console.log("Connected to MongoDB");
+ console.log("Connected to MongoDB !!!");
 })
 .catch((err) => {
- console.log("The error is - " , err)
+ console.log(err)
 })
 
 });
+
+
+
+app.use('/api/user' , userRouter);
+app.use('/api/auth' , authRouter);
 
 app.use((err, req, res, next) => {
  const statusCode = err.status || 500;
@@ -37,7 +46,3 @@ app.use((err, req, res, next) => {
   message
  })
 }) 
-
-app.use('/api/user' , userRouter);
-app.use('/api/auth' , authRouter);
-
