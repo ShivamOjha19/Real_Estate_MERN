@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, NavigateFunction, NavigateOptions } from 'react-router-dom'
 
 export default function SignIn() {
   const [formData, setFormData] = useState({})
@@ -21,7 +21,7 @@ export default function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(false);
+      setLoading(true);
       const res = await fetch('/api/auth/sign-in', {
         method: 'POST',
         headers: {
@@ -36,10 +36,9 @@ export default function SignIn() {
         setLoading(false)
         return
       }
-      setLoading(false);
-      setError(null);
-
       console.log(data);
+      setLoading(false)
+      setError(null)
       navigate('/')
 
     } catch (error) {
