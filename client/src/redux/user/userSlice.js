@@ -26,3 +26,5 @@ const userSlice = createSlice({
 })
 
 export const {signInStart , signInFailure, signInSucess} = userSlice.actions;
+
+export default userSlice.reducer;
